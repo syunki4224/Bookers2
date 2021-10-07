@@ -1,5 +1,5 @@
 <table class='table'>
-  <tr><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></tr>
+  <tr><%= attachment_image_tag(user, :profile_image, :fill, 100, 100, fallback: "no-image-icon.jpg") %></tr>
   <tr>
 	  <th>name</th>
 	  <th><%= user.name %></th>
@@ -8,6 +8,23 @@
 	  <th>introduction</th>
 	  <th><%= user.introduction %></th>
   </tr>
+  <tr>
+    <th>follows</th>
+    <th><%= link_to user.followings.count, follows_user_path(user.id) %></th>
+  </tr>
+  <tr>
+    <th>followers</th>
+    <th><%= link_to user.followers.count, followers_user_path(user.id) %></th>
+  </tr>
+  <td>
+    <% unless current_user == user %>
+      <% if user.followed_by?(current_user) %>
+       <th><%= link_to "フォロー外す", user_relationships_path(user.id), method: :delete, class: "btn btn-sm btn-info" %></th>
+      <% else %>
+       <th><%= link_to "フォローする", user_relationships_path(user.id), method: :post, class: "btn btn-sm btn-success" %></th>
+      <% end %>
+    <% end %>
+  </td>
 </table>
 
 <div class='row'>

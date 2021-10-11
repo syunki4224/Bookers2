@@ -11,7 +11,7 @@
             <td><%= book_comment.comment %></td>
           </td>
           <% if book_comment.user.id == current_user.id %>
-            <td><%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, "data-confirm" => "本当に消しますか？", class: "btn btn-sm btn-danger" %></td>
+            <td><%= link_to "Destroy", book_book_comment_path(book_comment.book.id, book_comment.id), method: :delete, remote: true, class: "btn btn-sm btn-danger" %></td>
           <% end %>
         </tr>
       <% end %>
@@ -19,8 +19,8 @@
   </table>
 
   <div>
-    <%= form_with model:[book, book_comment], local: true do |f| %>
-     <%= f.text_area :comment, size:"90x5" %><br>
+    <%= form_with model:[book, book_comment] do |f| %>
+     <%= f.text_area :comment, size:"90x5", class: "inputComment" %><br>
      <%= f.submit "送信" %>
     <% end %>
   </div>
